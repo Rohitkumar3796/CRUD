@@ -1,0 +1,51 @@
+{% extends 'register/base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row text text-center justify-content-around">
+        <h1 class="text-decoration-underline mb-4 "> Here, we will show the data of Employee</h1>
+    </div>
+    <div>
+        <a href="{% url 'add' %}" class="float-end btn btn-primary btn-sm">Add Data</a>
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employee %}
+            <tr>
+
+                <td>{{emp.empId}}</td>
+                <td>{{emp.empname}}</td>
+                <td>{{emp.empemail}}</td>
+                <td>{{emp.empmobile}}</td>
+                <td>{{emp.empaddress}}</td>
+                <td>
+                    <input type="hidden" name="empid" value="{{emp.id}}">
+                    <a href="{% url 'edit-data' emp.id %}" class="btn btn-primary btn-sm">Edit</a>
+                    <form action="{% url 'delete' %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="getid" value="{{emp.id}}">
+                        <input type="submit" class="btn btn-danger btn-sm " value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</div>
+</div>
+
+{% endblock content %}
